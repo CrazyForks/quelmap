@@ -108,8 +108,12 @@ class DataService:
             raise ValueError("テーブル名は空でない文字列である必要があります")
         
         name = unicodedata.normalize("NFKC", str(name))
+        # 記号をアンダースコアに
+        normalized = re.sub(r"[^\w\s]", "_", name)
+        # 空白をアンダースコアに
+        normalized = re.sub(r"\s+", "_", normalized)
         # 連続するアンダースコアを単一に
-        normalized = re.sub(r"_+", "_", str(name))
+        normalized = re.sub(r"_+", "_", str(normalized))
         # 先頭と末尾のアンダースコアを除去
         normalized = normalized.strip("_")
 
